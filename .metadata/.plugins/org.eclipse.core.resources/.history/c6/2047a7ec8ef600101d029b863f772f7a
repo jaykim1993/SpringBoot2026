@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도서 대여 입력</title>
+</head>
+<body>
+	<form th:action="@{/book/retalProc}" method="POST">
+		<input type="text" name="title" placeholder="제목 입력"/>
+		<br>
+		<input type="text" name="author" placeholder="저자 입력"/>
+		<br>
+		<input type="text" name="isbn" placeholder="책 넘버 입력"/>
+		<br>
+		<input type="text" name="user" placeholder="대여자 입력"/>
+		<br>
+		<input type="submit" name="submit" value="입력 완료"/>
+	</form>
+</body>
+</html>

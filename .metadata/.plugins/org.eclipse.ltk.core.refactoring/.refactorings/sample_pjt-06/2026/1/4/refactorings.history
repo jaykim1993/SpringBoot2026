@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.green.controller.OrderController&apos; to &apos;BookingController&apos;&#x0D;&#x0A;- Original project: &apos;sample_pjt-06&apos;&#x0D;&#x0A;- Original element: &apos;com.green.controller.OrderController&apos;&#x0D;&#x0A;- Renamed element: &apos;com.green.controller.BookingController&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;OrderController&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;com.green.controller{OrderController.java[OrderController" matchStrategy="1" name="BookingController" qualified="false" references="true" similarDeclarations="false" stamp="1768985477136" textual="false" version="1.0"/>
+</session>

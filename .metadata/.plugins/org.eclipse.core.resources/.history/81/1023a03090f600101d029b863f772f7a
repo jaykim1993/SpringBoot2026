@@ -1,0 +1,10 @@
+package com.green.classes;
+
+public class RentInfo {
+	String title;
+	String author;
+	String isbn;
+	String user;
+	
+	
+}

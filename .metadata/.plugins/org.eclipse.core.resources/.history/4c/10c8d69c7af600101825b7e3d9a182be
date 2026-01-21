@@ -1,0 +1,56 @@
+package com.green;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class MemberController {
+	
+	// 아래 작성한 메서드는 핸들러 메서드
+	// 회원가입 페이지
+	@GetMapping("/member/signup") // http://localhost:8090/member/signup
+	public String SingupForm() {
+		System.out.println("signUpForm() 추가"); // 콘솔 확인용
+		return "SignUpForm"; // src/main/recources/templates 이하 해당 html 파일명 입력
+	}
+	
+	// 로그인 페이지
+	@GetMapping("/member/signin") // http://localhost:8090/member/signin
+	public String SinginForm() {
+		System.out.println("signInForm() 추가"); // 콘솔 확인용
+		return "SignInForm"; // src/main/recources/templates 이하 해당 html 파일명 입력
+	}
+	
+	// 회원가입한 데이터가 출력되는 페이지 SignUpResult로 전달되는 메소드
+	// 숨겨서 정보 전달하는 @PostMapping 사용
+	// 가입 정보 넘기기위해 @RequestParam 사용
+	@PostMapping("/member/signup_confirm")
+	public String SignUpConfirm(
+			// public String sign(String id, String pw, String email){}
+			// => IOC 로 인해 어노테이션으로 넘긴다.
+			@RequestParam String id,
+			@RequestParam String pw,
+			@RequestParam String email,
+			Model model // model 에 데이터 담아서 전달
+			) {
+		System.out.println("signUpConfirm() 추가");
+		
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-DD hh:mm:ss");
+		
+		// model 담기
+		model.addAttribute("new_id", id);
+		model.addAttribute("new_pw", pw);
+		model.addAttribute("new_email", email);
+		model.addAttribute("sign_up_time", sdf.format(now));
+		return "SignUpResult";
+	}
+
+
+}

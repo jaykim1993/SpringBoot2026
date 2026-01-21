@@ -1,0 +1,16 @@
+package com.green.classes;
+
+public class RentInfo {
+	String title;
+	String author;
+	String isbn;
+	String user;
+	
+	RentInfo(){};
+	RentInfo(String title,String author,String isbn,String user){
+		this.title = title;
+		this.author = author;
+		this.isbn = isbn;
+		this.user = user;
+	}
+}
