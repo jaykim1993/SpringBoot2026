@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입 결과</title>
+<Link rel="stylesheet" th:href="@{/css/common.css}">
+<Link rel="stylesheet" th:href="@{/css/header_nav_footer.css}">
+<Link rel="stylesheet" th:href="@{/css/home.css}">
+<Link rel="stylesheet" th:href="@{/css/member.css}">
+<script th:src="@{/js/member.js}"></script>
+</head>
+<body>
+	<header th:replace="~{/include/header_nav_footer.html::header}"></header>
+	<nav th:replace="~{/include/header_nav_footer.html::nav}"></nav>
+	<section>
+		<div id="section_wrap">
+			<div class="word">회원가입</div>
+			<div class="content">
+				<div th:if="${result>0}">
+					<h2>회원가입 성공</h2>
+				</div>
+				<div th:if="${result<=0}">
+					<h2>회원가입 실패</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

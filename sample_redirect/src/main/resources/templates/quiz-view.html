@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+body {
+	padding: 6px 12px;
+	width: 400px;
+	height: 600px;
+	margin: 40px auto;
+}
+input {
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+button {
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #eee;
+    color: black;
+    cursor: pointer;
+}
+button:hover{
+	background-color: black;
+    color: #eee;
+}
+</style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form th:action="@{/check}">
+	<h2>🔐비밀번호를 입력하세요 (힌트:1234)</h2>
+	<p th:if="${msg}" th:text="${msg}" style="color : red"></p>
+	<input type="text" name="pass" placeholder="비밀번호 입력"/>
+	<button type="submit">확인</button>
+</form>
+</body>
+</html>

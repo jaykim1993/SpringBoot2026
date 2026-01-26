@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+body {
+	padding: 6px 12px;
+	width: 400px;
+	height: 600px;
+	margin: 40px auto;
+}
+a {
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background-color: #eee;
+    color: black;
+    cursor: pointer;
+}
+a:hover{
+	background-color: black;
+    color: #eee;
+}
+</style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>🎇축하합니다! 정답입니다!</h1>
+	<p th:if="${msg}" th:text="${msg}" style="color : blue"></p>
+	<a th:href="@{/quiz}">다시 테스트하기</a>
+</body>
+</html>
+

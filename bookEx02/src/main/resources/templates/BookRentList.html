@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도서 대여 정보</title>
+</head>
+<body>
+
+<h2>도서 대여 정보</h2>
+
+<p>도서명 : <span th:text="${book.title}"></span></p>
+<p>저자 : <span th:text="${book.author}"></span></p>
+<p>ISBN : <span th:text="${book.isbn}"></span></p>
+<p>대여자 : <span th:text="${user}"></span></p>
+<p>대여 시작일 : <span th:text="${sDate}"></span></p>
+<p>대여 종료일 : <span th:text="${eDate}"></span></p>
+<div class="btn-area">
+    <a th:href="@{/book/rent}">도서 추가 대여</a>
+</div>
+
+</body>
+</html>

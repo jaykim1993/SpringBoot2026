@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>도서 등록</title>
+    <style>
+        h2 {
+            margin-bottom: 20px;
+        }
+        .dd{
+        	margin-bottom: 10px;
+        }
+        form{
+            margin-bottom: 10px;
+        }
+        label {
+            margin-bottom: 10px;
+            display: inline-block;
+            width: 80px;
+        }
+        input {
+            margin-bottom: 10px;
+            width: 200px;
+			padding: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 6px 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>도서 등록</h2>
+<form th:action="@{/book/booklist}" method="post">
+	<hr class ="dd"/>
+    <label for="title">도서명</label>
+    <input type="text" name="title"  placeholder="도서명 입력" >
+    <br/>
+    <label>저자</label>
+    <input type="text" name="author" placeholder="저자명 입력" >
+	<br/>
+    <label>ISBN</label>
+    <input type="text" name="isbn" placeholder="ISBN 입력" >
+    <br/>
+    <label>등록자</label>
+    <input type="text" name="adder" placeholder="등록자 입력" >
+    <br/>
+    <label>등록날짜</label>
+    <input type="date" name="addedDate" placeholder="등록일 입력" >
+    <br/>
+	<hr/>
+    <button type="submit">도서 등록</button>
+</form>
+
+</body>
+</html>
