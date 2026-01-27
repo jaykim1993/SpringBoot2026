@@ -63,11 +63,15 @@ public class MemberDAO {
 
 	// 회원가입한 유저 모두 출력되는 메소드 작성
 	public List<MemberDTO> allSelectMember() {
-		String sql = "SELECT * FROM user_member";
+		System.out.println("MemberDAO - allSelectMember() 메서드 호출");
+		
 		// List<E> 인터페이스이므로 구현할 수 없다.
 		// ArrayList 이용
+		// 반환받을 ArrayList<MemberDTO> 객체 생성
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
-		System.out.println("MemberDAO - allSelectMember() 메서드 호출");
+		// SQL 작성
+		String sql = "SELECT * FROM user_member";
+
 		try(
 			Connection conn = dataSource.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -94,4 +98,107 @@ public class MemberDAO {
 		}
 		return list;
 	}
+	
+	// -------------------------------------------2026년 1월 27일 추가쿼리 작성 부분------------------------------------------------
+	// 개인 한 사람의 정보를 검색하는 메서드
+	public MemberDTO oneSelectMember(String id){
+		System.out.println("MemberDAO - oneSelectMember() 메서드 호출");
+		// 반환받을 MemberDTO 객체 mdto 생성
+		MemberDTO mdto = new MemberDTO();
+		// SQL 작성
+		String sql = "SELECT * FROM user_member WHERE id=?";
+		// 예외 처리 try(자동 close를 위해 Connection 설정) ~ catch()
+		try(
+				Connection conn = dataSource.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				
+				) {
+			// 실행문 작성은 여기
+			// ? 대응 먼저
+			pstmt.setString(1, id);
+			// Select 문은 ResultSet으로 담는다.
+			ResultSet rs = pstmt.executeQuery();
+			
+			// re.next() 없이 값을 꺼내오면 항상 null이다.
+			if(rs.next()) {
+				mdto.setNo(rs.getInt("no"));
+				mdto.setId(rs.getString("id"));
+				mdto.setPw(rs.getString("pw"));
+				mdto.setMail(rs.getString("mail"));
+				mdto.setPhone(rs.getString("phone"));
+				mdto.setReg_date(rs.getString("reg_date"));
+				mdto.setMod_date(rs.getString("mod_date"));
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return mdto;
+	}
+	
+	// 개인 한 사람의 정보를 수정하는 쿼리
+	public int updateMember(MemberDTO mdto) {
+		System.out.println("MemberDAO - updateMember() 메서드 호출");
+		// 반환받을 MemberDTO 객체 mdto 생성
+		int result = 0;
+		// SQL 작성
+		String sql = "UPDATE user_member SET mail=?, phone=? WHERE id=?";
+		
+		try(
+				Connection conn = dataSource.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				){
+			
+			// ? ? ? 에 대항
+			pstmt.setString(1, mdto.getMail());
+			pstmt.setString(2, mdto.getPhone());
+			pstmt.setString(3, mdto.getId());
+			result = pstmt.executeUpdate();
+			System.out.println("UPDATE result = " + result);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+	// 개인 한 사람의 패스워드 리턴하는 쿼리
+	public String getPass(String id) {
+		System.out.println("MemberDAO - getPss() 메서드 호출");
+		String pass="";
+		String sql = "SELECT pw FROM user_member WHERE id=?";
+		try(
+				Connection conn = dataSource.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				){
+			
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				pass = rs.getString(1);
+			}
+			System.out.println("getPss result = " + pass);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return pass;
+	}
+	
+	// 한사람 개인의 정보를 삭제하는 메소드 작성
+	public int deleteMember(String id) {
+		int result = 0;
+		String sql ="DELETE FROM user_member WHERE id=?";
+		
+		try(	Connection conn = dataSource.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				){
+			pstmt.setString(1, id);
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

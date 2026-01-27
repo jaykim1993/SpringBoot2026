@@ -37,8 +37,48 @@ public class MemberService {
 			return user_id_already_exist;
 		}
 	}
+
+//-------------------------------------------2026년 1월 27일 서비스로직 작성 부분------------------------------------------------
+	// 개인 한 사람의 정보를 검색하는 메서드
+	public MemberDTO oneListMember(String id) {
+		System.out.println("MemberService - oneListMember() 메서드");
+		return memberDao.oneSelectMember(id);
+	}
+	// 헷갈리면 DAO를 먼저 만들고 서비스로 가져오자
+
+	
+	// 개인 한 사람의 패스워드만 출력하는 메서드
+	public String onePass(String id) {
+		System.out.println("MemberService - onePass() 메서드");
+		return memberDao.getPass(id);
+	}
+	
+	// 개인 한 사람의 정보를 수정하는 메서드
+	// DB 패스워드와 입력한 패스워드가 같은지 다른지
+	public boolean modifyMember(MemberDTO mdto) {
+	    System.out.println("MemberService - modifyMember() 메서드");
+
+	    String dbPass = memberDao.getPass(mdto.getId());
+	    
+	    if (dbPass != null && mdto.getPw().equals(dbPass)) {
+	        return memberDao.updateMember(mdto) == 1;
+	    }
+	    return false;
+	}
+	
+	//
+	public boolean oneDelete(String id) {
+		System.out.println("MemberService - oneDelete() 메서드");
+		// 현재 deletemember() DAO의 결과 값이 result 0 또는 1
+		// 삭제되면 1, 아니면 0
+		return memberDao.deleteMember(id) == 1;
+		// 따라서 삭제되었으면 true
+		// 삭제되지 않았으면 false
+	}
 }
 
+
+// 서비스는
 // controller -> service : DAO 메소드 찾아 잇어?
 // DAO야 메소드 있어? -> DB에서 찾아옴
 // DB -> id, pw값들고 -> DAO한테 보냄 -> service의 메소드로 보냄

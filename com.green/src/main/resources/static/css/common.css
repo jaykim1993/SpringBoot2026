@@ -16,10 +16,10 @@ li {
 input {
 	width: 300px;
 	padding: 10px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
+	border: none;
 	outline: none;
 	margin: 3px;
+	background-color: inherit;
 }
 
 input[type='button'],

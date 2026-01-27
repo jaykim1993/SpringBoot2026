@@ -16,7 +16,7 @@
 		<div id="section_wrap">
 			<div class="word">전체 회원 목록</div>
 			<div class="content">
-			<table border="1">
+			<table  style="width: 900px;">
 			  <tr>
 			    <th>번호</th>
 			    <th>ID</th>
@@ -28,7 +28,11 @@
 			  </tr>
 			  <tr th:each="li: ${list}">
 			    <td th:text="${li.no}"></td>
-			    <td th:text="${li.id}"></td>
+			    <td>
+			    <!-- a 태그에서 id 넘기기는 get 방식 -->
+			    	<a th:href="@{/member/memberInfo(id=${li.id})}"
+			    	th:text="${li.id}"></a>
+			    </td>
 			    <td th:text="${li.pw}"></td>
 			    <td th:text="${li.mail}"></td>
 			    <td th:text="${li.phone}"></td>
@@ -41,5 +45,8 @@
 		</div>
 	</section>
 	<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+		<script th:if="${msg}">
+			alert('[[${msg}]]')
+		</script>
 </body>
 </html>
