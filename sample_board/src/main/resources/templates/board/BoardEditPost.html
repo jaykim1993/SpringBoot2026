@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Board Modify</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<link rel="stylesheet" th:href="@{/css/table.css}">
+</head>
+<body>
+
+<header th:replace="~{/header_footer/HeaderFooter.html::header}"></header>
+
+<section>
+	<div class="section_wrap">
+		<div class="section_header">
+			<h2>글 수정하기</h2>
+		</div>
+
+		<div class="content">
+			<form th:action="@{/board/modify}" method="post">
+				<!-- 숨겨진 상태로 value 넘길 수 있다. -->
+				<input type="hidden" name="id" th:value="${postDetail.id}">
+
+				<table class="board_table">
+					<tr>
+						<th>글번호</th>
+						<td th:text="${postDetail.id}"></td>
+					</tr>
+					<tr>
+						<th>등록일</th>
+						<td th:text="${postDetail.createdAt}"></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td th:text="${postDetail.writer}"></td>
+					</tr>
+
+					<tr>
+						<th>제목</th>
+						<td>
+							<input type="text"
+								   name="title"
+								   class="input_title"
+								   th:value="${postDetail.title}"
+								   required>
+						</td>
+					</tr>
+
+					<tr>
+						<th>내용</th>
+						<td>
+							<textarea name="content"
+									  class="input_content"
+									  rows="10"
+									  required
+									  th:text="${postDetail.content}">
+							</textarea>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2" class="btn_area">
+							<input type="submit" value="수정완료" readonly/>
+							<a th:href="@{/board/detail(id=${postDetail.id})}">취소</a>
+						</td>
+					</tr>
+				</table>
+
+			</form>
+		</div>
+	</div>
+</section>
+
+<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
+
+</body>
+</html>
+

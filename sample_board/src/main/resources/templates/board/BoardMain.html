@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home of Board_ver.01</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<link rel="stylesheet" th:href="@{/css/boardmain.css}">
+</head>
+<body>
+	<header th:replace="~{/header_footer/HeaderFooter.html::header}"></header>
+	<section>
+		<div class="section_wrap">
+			<div class="section_header"><h2>전체 글 목록</h2></div>
+			<div class="content">
+				<table class="board_list">
+					<thead>
+						<tr>
+							<th>글번호</th>
+							<th>등록일</th>
+							<th class="td_title">제목</th>
+							<th>작성자</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="li:${list}" class="tr_content">
+							<td>
+								<a th:href="@{/board/detail(id=${li.id})}"
+								   th:text="${li.id}"></a>
+							</td>
+							<td>
+								<a th:href="@{/board/detail(id=${li.id})}"
+								   th:text="${li.createdAt}"></a>
+							</td>
+							<td>
+								<a th:href="@{/board/detail(id=${li.id})}"
+								   th:text="${li.title}"></a>
+							</td>
+							<td>
+								<a th:href="@{/board/detail(id=${li.id})}"
+								   th:text="${li.writer}"></a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4" class="btn_area">
+								<a th:href="@{/board/newPost}">새글 등록하기</a>
+								<a th:href="@{/board/main}">새로고침</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</section>
+			<script th:if="${msg}">
+			alert('[[${msg}]]')
+		</script>
+	<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
+</body>
+</html>

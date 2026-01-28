@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home of Board_ver.01</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<link rel="stylesheet" th:href="@{/css/table.css}">
+</head>
+<body>
+	<header th:replace="~{/header_footer/HeaderFooter.html::header}"></header>
+	<section>
+		<div class="section_wrap">
+			<div class="section_header"><h2>새글 등록하기</h2></div>
+			<div class="content">
+				<form th:action="@{/board/posting_confirm}"
+				      name="BoardNewPost"
+				      method="post"
+				      class="board_form">
+				
+				    <table class="board_table">
+				        <tr>
+				            <th>제목</th>
+				            <td>
+				                <input type="text"
+				                       name="title"
+				                       class="post_title"
+				                       placeholder="제목을 입력하세요"
+				                       required
+				                />
+				            </td>
+				        </tr>
+				        <tr>
+				            <th>작성자</th>
+				            <td>
+				                <input type="text"
+				                       name="writer"
+				                       class="post_writer"
+				                       placeholder="작성자"
+				                       required
+				                />
+				            </td>
+				        </tr>
+				        <tr>
+				            <th>내용</th>
+				            <td>
+				                <textarea
+				                	name="content"
+				                    class="post_content"
+				                    placeholder="내용을 입력하세요"
+				                    required
+				                ></textarea>
+				            </td>
+				        </tr>
+				        <tr>
+				            <td colspan="2" class="btn_area">
+				                <input type="submit" value="등록하기">
+				                <a th:href="@{/board/main}">취소하기</a>
+				            </td>
+				        </tr>
+				    </table>
+				    <script th:if="${msg}">
+						alert('[[${msg}]]')
+					</script>
+				</form>
+
+			</div>
+		</div>
+	</section>
+	<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
+</body>
+</html>

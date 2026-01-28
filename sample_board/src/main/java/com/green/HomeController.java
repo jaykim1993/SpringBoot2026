@@ -1,0 +1,15 @@
+package com.green;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	@GetMapping({"","/"})
+	public String showHome() {
+		System.out.println("시작 화면 보이기_HomeController-showHome()");
+		return "Home";
+	}
+	
+}
