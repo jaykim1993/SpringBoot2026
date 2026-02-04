@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MemberMapper의 패키지 경로 정확하게 타야함 -->
+<mapper namespace="com.green.member.mapper.MemberMapper">
+	
+	<!-- insert / delete / update 문은 
+	resultType 사용하지 않고 
+	저절로 영향받은 결과를 int로 반환한다 -->
+	
+	<!-- 1. DB내 아이디 존재 유/무 중복 체크 쿼리 -->
+	<select id = "isMember" 
+	parameterType="String" 
+	resultType="boolean">
+		SELECT COUNT(*) FROM board_user WHERE id = #{id}
+	</select>
+	
+	<!-- 2. 회원 개인을 추가 쿼리 -->
+	<insert id ="insertMember"
+	parameterType = "MemberDTO">
+		INSERT INTO board_user(id, pw, nickname, mail, phone)
+		VALUES(#{id},#{pw}, #{nickname}, #{mail},#{phone})
+	</insert>
+
+	<select id="oneSelectMember"
+    parameterType="String"
+    resultType="MemberDTO">
+		SELECT * FROM board_user WHERE id=#{id}
+	</select>
+
+	
+</mapper>

@@ -33,11 +33,10 @@
 				            <th>작성자</th>
 				            <td>
 				                <input type="text"
-				                       name="writer"
-				                       class="post_writer"
-				                       placeholder="작성자"
-				                       required
-				                />
+				                	   name="writer"
+								       class="post_writer"
+								       th:value="${session.loginedMember.nickname}"
+								       required />
 				            </td>
 				        </tr>
 				        <tr>

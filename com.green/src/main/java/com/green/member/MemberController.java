@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class MemberController {
 	
@@ -32,7 +34,7 @@ public class MemberController {
 		// 회원가입이 제대로 되었는지, 혹은 실패했는지 알려줘
 		int result = memberservice.signupConfirm(mdto);
 		// 회원 가입 성공 시, 회원 목록 주소로 이동
-		if(result == MemberService.user_signup_success) {
+		if(result == MemberService.user_id_success) {
 			return "redirect:/member/list";
 		} else {
 			// 회원가입이 실패한 경우
@@ -60,7 +62,7 @@ public class MemberController {
 			@RequestParam("id") String id // a태그에서 넘겨준 id를 이용하기 위해 사용
 			) {
 		System.out.println("MemberController - memberInfo()"+ id);
-		MemberDTO onememberInfo = memberservice.oneListMember(id);
+		MemberDTO onememberInfo = memberservice.oneSelect(id);
 //		MemberDTO onememberInfo = memberservice.oneListMember(mdto.getId()); <- RequestParam 없이 할때
 		model.addAttribute("oneInfo", onememberInfo);
 		String nextPage = "member/memberInfo";
@@ -71,7 +73,7 @@ public class MemberController {
 	@GetMapping("/member/modify")
 	public String modifyForm(Model model, MemberDTO mdto) {
 		System.out.println("MemberController - memberList()");
-		MemberDTO onememberInfo = memberservice.oneListMember(mdto.getId());
+		MemberDTO onememberInfo = memberservice.oneSelect(mdto.getId());
 		model.addAttribute("oneInfo", onememberInfo);
 		String nextPage = "member/member_modify";
 		return nextPage;
@@ -113,5 +115,44 @@ public class MemberController {
 		}
 		
 	}
+	
+	// 로그인 양식 폼 이동
+	@GetMapping("/member/login")
+	public String loginForm() {
+		System.out.println("MemberController - loginForm()");
+		return "member/login_form";
+	}
+	// 로그인 확인 처리
+	@PostMapping("/member/loginPro")
+	public String loginPro(MemberDTO mdto, RedirectAttributes re, HttpSession session) {
+		System.out.println("MemberController - loginPro()");
+		
+		MemberDTO loginedMember = memberservice.loginConfirm(mdto);
+		
+		if(loginedMember != null) {
+			System.out.println("로그인성공");
+			session.setAttribute("loginedMember", loginedMember);
+			re.addFlashAttribute("msg",loginedMember.getId() + "님 환영합니다!");
+			return "redirect:/";
+		} else {
+				re.addFlashAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+				return "redirect:/member/login";
+		}
+	}
+	
+	// 로그아웃
+	@GetMapping("/member/logout")
+	public String logout(HttpSession session, RedirectAttributes re) {
+		// 1. 세션 무효화
+		session.invalidate();
+		
+		// 2. 로그아웃 완료 메시지 전달(선택)
+		re.addFlashAttribute("msg","로그아웃 되었습니다.");
+		
+		// 3. 홈 화면으로 리다이렉트
+		return "redirect:/";
+		
+	}
+
 	
 }

@@ -7,8 +7,8 @@
 	<section name="JavaElementSearchActions">
 	</section>
 	<section name="NewClassCreationWizard.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="375"/>
-		<item key="DIALOG_Y_ORIGIN" value="226"/>
+		<item key="DIALOG_X_ORIGIN" value="376"/>
+		<item key="DIALOG_Y_ORIGIN" value="290"/>
 		<item key="DIALOG_WIDTH" value="592"/>
 		<item key="DIALOG_HEIGHT" value="659"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
@@ -41,7 +41,7 @@
 		<item key="create_package_info_java" value="false"/>
 	</section>
 	<section name="NewInterfaceCreationWizard.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="670"/>
+		<item key="DIALOG_X_ORIGIN" value="371"/>
 		<item key="DIALOG_Y_ORIGIN" value="166"/>
 		<item key="DIALOG_WIDTH" value="597"/>
 		<item key="DIALOG_HEIGHT" value="543"/>
@@ -69,8 +69,8 @@
 		<item key="RemoveFinal" value="false"/>
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
-		<item key="DIALOG_X_ORIGIN" value="427"/>
-		<item key="DIALOG_Y_ORIGIN" value="64"/>
+		<item key="DIALOG_X_ORIGIN" value="428"/>
+		<item key="DIALOG_Y_ORIGIN" value="117"/>
 		<item key="DIALOG_WIDTH" value="540"/>
 		<item key="DIALOG_HEIGHT" value="696"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
@@ -93,5 +93,8 @@
 			<item key="DIALOG_Y_ORIGIN" value="195"/>
 			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 		</section>
+	</section>
+	<section name="SelfEncapsulateFieldWizard">
+		<item key="GenerateJavadoc" value="false"/>
 	</section>
 </section>

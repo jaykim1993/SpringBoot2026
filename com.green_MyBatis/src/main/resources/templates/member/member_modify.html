@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+<Link rel="stylesheet" th:href="@{/css/common.css}">
+<Link rel="stylesheet" th:href="@{/css/header_nav_footer.css}">
+<Link rel="stylesheet" th:href="@{/css/home.css}">
+<Link rel="stylesheet" th:href="@{/css/member.css}">
+<script th:src="@{/js/member.js}"></script>
+</head>
+<body>
+	<header th:replace="~{/include/header_nav_footer.html::header}"></header>
+	<nav th:replace="~{/include/header_nav_footer.html::nav}"></nav>
+	<section>
+		<div id="section_wrap">
+			<div class="word">개인 회원 정보 수정</div>
+			<div class="content">
+			<form th:action="@{/member/modify}" method="post">
+				<table style="width: 800px;">
+				  <tr>
+				  	<th width="100">아이디</th>
+				  	<td>
+				  		<input type="text" name="id" th:value="${oneInfo.id}" readonly>
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<th>E-Mail</th>
+				  	<td>
+				  		<input type="text" name="mail" th:value="${oneInfo.mail}">
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<th>전화번호</th>
+				  	<td>
+				  		<input type="tel" name="phone" th:value="${oneInfo.phone}">
+				  	</td>
+				  </tr>
+				  <tr>
+				  	<th>비밀번호</th>
+				  	<td>
+				  		<input type="password" name="pw" required placeholder="본인 확인을 위해 비밀번호를 입력하세요"/>
+				  	</td>
+				  </tr>
+				</table>
+				<div class="btn-area">
+					<button type="submit" class="btn" onclick="return confirm('정말 수정하시겠습니까?');">수정하기</button>
+					<a th:href="@{/member/list}" class="btn">목록보기</a>
+				</div>
+			</form>
+			
+			</div>
+		</div>
+		<script th:if="${msg}">
+			alert('[[${msg}]]')
+		</script>
+	</section>
+	<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

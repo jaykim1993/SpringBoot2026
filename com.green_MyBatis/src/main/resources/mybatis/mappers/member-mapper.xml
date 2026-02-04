@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- MemberMapper의 패키지 경로 정확하게 타야함 -->
+<mapper namespace="com.green.member.mapper.MemberMapper">
+	
+	<!-- insert / delete / update 문은 
+	resultType 사용하지 않고 
+	저절로 영향받은 결과를 int로 반환한다 -->
+	
+	<!-- 1. DB내 아이디 존재 유/무 중복 체크 쿼리 -->
+	<select id = "isMember" 
+	parameterType="String" 
+	resultType="boolean">
+		SELECT COUNT(*) FROM user_member WHERE id = #{id}
+	</select>
+	
+	<!-- 2. 회원 개인을 추가 쿼리 -->
+	<insert id ="insertMember"
+	parameterType = "MemberDTO">
+		INSERT INTO user_member(id, pw, mail, phone)
+		VALUES(#{id},#{pw},#{mail},#{phone})
+	</insert>
+	
+	<!-- 3. 회원 전체 목록 검색 쿼리 -->
+	<select id="allSelectMember"
+    resultType="MemberDTO">
+		SELECT * FROM user_member ORDER BY no ASC
+	</select>
+	
+	<!-- 4. 개인 한 사람의 정보 검색 쿼리 -->
+	<select id="oneSelectMember"
+    parameterType="String"
+    resultType="MemberDTO">
+		SELECT * FROM user_member WHERE id=#{id}
+	</select>
+	
+	<!-- 5. 개인 한 사람의 정보를 수정하는 쿼리 -->
+	<update id="updateMember"
+	parameterType = "MemberDTO">
+		UPDATE user_member SET mail=#{mail},phone=#{phone} WHERE id=#{id}
+	</update>
+	
+	<!-- 6. 개인 한 사람의 패스워드 리턴하는 쿼리 -->
+	<select id="getPass"
+    parameterType="String"
+    resultType="String">
+    	SELECT pw FROM user_member WHERE id=#{id}
+	</select>
+	
+	<!-- 7. 개인 한 사람의 정보를 삭제하는 쿼리 -->
+	<delete id="deleteMember"
+    parameterType="String">
+		DELETE FROM user_member WHERE id=#{id}
+	</delete>
+	
+</mapper>

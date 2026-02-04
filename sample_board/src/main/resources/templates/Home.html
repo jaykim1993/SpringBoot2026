@@ -13,13 +13,16 @@
 				<h3>"당신이 희망을 선택하는 순간, 당신은 무엇이든 할 수 있게 될 것이다." - 크리스토퍼 리브</h3>
 			</div>
 			<div class="content">
-			    <a th:href="@{/board/newPost}" class="img-link">
-			        <img th:src="@{img/board.jpg}" alt="글 작성 링크">
-			        <span class="hover_comment">add post!</span>
+			    <a th:href="@{/board/main}" class="img-link">
+			        <img th:src="@{img/board.jpg}" alt="글 목록 링크">
+			        <span class="hover_comment">CLICK!</span>
 			    </a>
 			</div>
 		</div>
 	</section>
 	<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
+	<script th:if="${msg}">
+        alert('[[${msg}]]');
+    </script>
 </body>
 </html>

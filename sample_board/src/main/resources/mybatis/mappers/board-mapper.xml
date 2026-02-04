@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- BoardMapper의 패키지 경로 정확하게 타야함 -->
+<!-- MyBatis에서는 MySQL SQL 문법으로 작성해야한다. -->
+<mapper namespace="com.green.board.mapper.BoardMapper">
+
+	<insert id ="insertPost"
+	parameterType = "BoardDTO">
+		INSERT INTO board(title, content, writer, id) VALUES (#{title},#{content},#{writer},#{id})
+	</insert>
+	
+	<select id = "allSelectPost"
+	resultType = "BoardDTO">
+		SELECT * FROM board ORDER BY no DESC
+	</select>
+	
+	<select id = "selectPost"
+	parameterType = "int"
+	resultType = "BoardDTO">
+		SELECT * FROM board WHERE no =#{no}
+	</select>
+	
+	<update id ="updateContent"
+	parameterType = "BoardDTO">
+		UPDATE board SET title=#{title}, content=#{content} WHERE no=#{no}
+	</update>
+	
+	<delete id ="deleteContent"
+	parameterType = "int">
+		DELETE FROM board WHERE no=#{no}
+	</delete>
+	
+	<!-- 	6. 게시글 검색하는 쿼리 -->
+	<select id ="getSearchBoard" resultType="BoardDTO">
+			SELECT * FROM board
+			<where>
+				<choose>
+					<when test="searchType == 'subject'">
+						title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						content LIKE CONCAT('%', #{searchKeyword}, '%')
+					</otherwise>
+				</choose>
+			</where>
+			ORDER BY no DESC
+	</select>
+		
+		
+	<select id = "getAllcount" resultType = "int">
+		SELECT COUNT(*) FROM board
+	</select>
+	
+	<select id = "getPageList" resultType = "BoardDTO">
+		SELECT * FROM board ORDER BY no DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+</mapper>
+	

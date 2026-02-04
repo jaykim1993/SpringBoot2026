@@ -20,7 +20,7 @@
 			<table class="board_table">
 				<tr>
 					<th>글번호</th>
-					<td th:text="${postDetail.id}"></td>
+					<td th:text="${num}"></td>
 				</tr>
 				<tr>
 					<th>등록일</th>
@@ -43,12 +43,12 @@
 
 				<tr>
 					<td colspan="2" class="btn_area">
-						<a th:href="@{/board/modify(id=${postDetail.id})}">수정하기</a>
+						<a th:href="@{/board/modify(no=${postDetail.no}, num=${num})}">수정하기</a>
+						<!-- th:onclick="|return modifyCheck(${isLogin};)|" -->
+						
 						<a th:href="@{/board/main}">목록보기</a>
-						<a th:href="@{/board/delete(id=${postDetail.id})}"
-						   onclick="return confirm('정말 삭제하시겠습니까? 삭제된 데이터는 복구 할수 없습니다.')">
-						   삭제하기
-						</a>
+						<a th:href="@{/board/delete(no=${postDetail.no})}"
+						th:onclick="|return deleteCheck(${isLogin});|">삭제하기</a>
 					</td>
 					
 				</tr>
@@ -56,10 +56,30 @@
 		</div>
 	</div>
 </section>
+
+<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
 		<script th:if="${msg}">
 			alert('[[${msg}]]')
 		</script>
-<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
+<script>
+/* function modifyCheck(isLogin) {
 
+    if (!isLogin) {
+        alert("글을 수정하려면 로그인이 필요합니다.");
+        return false;
+    }
+
+    return true;
+} */
+function deleteCheck(isLogin) {
+
+    if (!isLogin) {
+        alert("글을 삭제하려면 로그인이 필요합니다.");
+        return false;
+    }
+
+    return confirm("정말 삭제하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다.");
+}
+</script>
 </body>
 </html>

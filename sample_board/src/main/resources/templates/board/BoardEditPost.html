@@ -19,12 +19,12 @@
 		<div class="content">
 			<form th:action="@{/board/modify}" method="post">
 				<!-- 숨겨진 상태로 value 넘길 수 있다. -->
-				<input type="hidden" name="id" th:value="${postDetail.id}">
+				<input type="hidden" name="no" th:value="${postDetail.no}">
 
 				<table class="board_table">
 					<tr>
 						<th>글번호</th>
-						<td th:text="${postDetail.id}"></td>
+						<td th:text="${num}"></td>
 					</tr>
 					<tr>
 						<th>등록일</th>
@@ -61,7 +61,7 @@
 					<tr>
 						<td colspan="2" class="btn_area">
 							<input type="submit" value="수정완료" readonly/>
-							<a th:href="@{/board/detail(id=${postDetail.id})}">취소</a>
+							<a th:href="@{/board/detail(no=${postDetail.no},num=${num})}">취소</a>
 						</td>
 					</tr>
 				</table>

@@ -2,17 +2,23 @@ package com.green.board;
 
 public class BoardDTO {
 
-	private int id; // PK, Auto Increment on DB
+	private int no; // PK, Auto Increment on DB
+	private String id;
 	private String title;
 	private String content;
 	private String writer;
 	private String createdAt;
-
 	
-	public int getId() {
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getTitle() {
@@ -39,4 +45,6 @@ public class BoardDTO {
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+
 }

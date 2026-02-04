@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- BoardMapper의 패키지 경로 정확하게 타야함 -->
+<!-- MyBatis에서는 MySQL SQL 문법으로 작성해야한다. -->
+<mapper namespace="com.green.board.mapper.BoardMapper">
+
+<!-- 	1. 하나의 게시글 insert 쿼리 -->
+		<insert id="insertBoard"
+		parameterType= "BoardDTO">
+			INSERT INTO board02(writer, subject, writerPw, content, id)
+			VALUES(#{writer},#{subject},#{writerPw},#{content}, #{id})
+		</insert>
+		
+<!-- 	2. 전체 글 목록 select 쿼리 -->
+		<select id = "getAllBoard"
+		resultType="BoardDTO"> <!-- List의 타입: BoardDTO 이다 -->
+			SELECT * FROM board02 ORDER BY num DESC
+		</select>
+		
+<!-- 	3. 게시글 하나 셀렉트 + readcount 누적 메서드 쿼리-->
+		<select id ="getOneBoard"
+		parameterType="int"
+		resultType="BoardDTO">
+			SELECT * FROM board02 WHERE num=#{num}
+		</select>
+		<update id = "updateReadcount"
+		parameterType= "int">
+			UPDATE board02 SET readcount=readcount+1 WHERE num=#{num}
+		</update>
+		
+<!-- 	4. 하나의 게시글 Update 하는 메서드 쿼리 -->
+		<update id ="updateBoard"
+		parameterType = "BoardDTO">
+			UPDATE board02 SET subject=#{subject}, content=#{content} 
+			WHERE num=#{num} AND writerPw=#{writerPw}
+		</update>
+		
+<!-- 	5. 하나의 게시글을 Delete 하는 쿼리 -->
+		<!-- 다른 데이터 타입의 2개 이상의 매개변수를 가지기에 parameterType 언급 없이 -->
+		<!-- 대신 BoardMapper에서 @Param 으로 각각 변수 지정해야함 -->
+		<delete id = "deleteBoard">
+			DELETE FROM board02 WHERE num=#{num} AND writerPw=#{writerPw}
+		</delete>
+	
+<!-- 	6. 게시글 검색하는 쿼리 -->
+		<!-- 다른 데이터 타입의 2개 이상의 매개변수를 가지기에 parameterType 언급 없이 -->
+		<!-- 대신 BoardMapper에서 @Param 으로 각각 변수 지정해야함 -->
+		<select id ="getSearchBoard" resultType="BoardDTO">
+			SELECT * FROM board02
+			<where>
+				<!-- 공식: A가 B랑 같냐? -->
+				<!-- <when test = "A == 'B'"> -->
+				<choose>
+					<when test="searchType == 'subject'">
+						subject LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						content LIKE CONCAT('%', #{searchKeyword}, '%')
+					</otherwise>
+				</choose>
+			</where>
+			ORDER BY num DESC
+		</select>
+		
+		<!--=========== 페이징 위한 쿼리 (전체)============-->
+		<!-- 	1. 전체 페이지 수 쿼리 -->
+		<select id = "getAllcount" resultType = "int">
+			SELECT COUNT(*) FROM board02
+		</select>
+	
+		<!-- 	2. 2. 전체 게시글을 startRow 부터 pageSize 만큼 select 하는 쿼리 -->	
+		<select id= "getPageList" resultType = "BoardDTO">
+			SELECT * FROM board02 ORDER BY num DESC
+			LIMIT #{startRow}, #{pageSize}
+		</select>
+		<!--=========== 페이징 위한 쿼리 (검색용)============-->
+		<!-- 	1. 전체 페이지 수 쿼리 -->
+		<select id = "getSearchCount" resultType = "int">
+			SELECT COUNT(*) FROM board02
+			<where>
+				<choose>
+					<when test="searchType == 'subject'">
+						subject LIKE CONCAT ('%', #{searchKeyword},'%')
+					</when>
+					<otherwise>
+						content LIKE CONCAT ('%', #{searchKeyword},'%')
+					</otherwise>
+				</choose>
+			</where>
+		</select>
+	
+		<!-- 	2. 2. 전체 게시글을 startRow 부터 pageSize 만큼 select 하는 쿼리 -->	
+		<select id = "getSearchPageList" resultType = "BoardDTO">
+			SELECT * FROM board02 
+			<where>
+				<choose>
+					<when test="searchType == 'subject'">
+						subject LIKE CONCAT ('%', #{searchKeyword},'%')
+					</when>
+					<otherwise>
+						content LIKE CONCAT ('%', #{searchKeyword},'%')
+					</otherwise>
+				</choose>
+			</where>
+			ORDER BY num DESC
+			LIMIT #{startRow}, #{pageSize}
+		</select>
+		<!--=========== 마이페이지용 쿼리 ============-->
+		<!-- 내가 쓴 글 수 -->
+		<select id = "getMyBoardCount" resultType = "int" parameterType = "String">
+			SELECT COUNT(*) FROM board02 WHERE id = #{loginId}
+		</select>
+		<!-- 내가 쓴 글 리스트 출력 쿼리 -->
+		<select id = "getMyBoardList" resultType = "BoardDTO">
+			SELECT
+				b.num,
+				b.subject,
+				b.reg_date,
+				b.readcount,
+				m.id as writer
+			FROM board02 b
+			INNER JOIN user_member m ON b.id = m.id
+			WHERE b.id = #{loginId}
+			ORDER BY b.num DESC
+			LIMIT #{startRow}, #{pageSize}
+		</select>
+</mapper>
+	

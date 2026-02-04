@@ -44,7 +44,7 @@ public class BoardDAO {
 		System.out.println("DAO 쿼리- 전체 글 셀렉트 메서드");
 		
 		List<BoardDTO> postlist = new ArrayList<BoardDTO>();
-		String sql = "SELECT * FROM board ORDER BY id DESC";
+		String sql = "SELECT * FROM board ORDER BY no DESC";
 		
 		try(
 			Connection conn = dataSource.getConnection();
@@ -54,7 +54,7 @@ public class BoardDAO {
 			while(rs.next()) {
 				BoardDTO bdto = new BoardDTO();
 				
-				bdto.setId(rs.getInt("id"));
+				bdto.setNo(rs.getInt("no"));
 				bdto.setTitle(rs.getString("title"));
 				bdto.setContent(rs.getString("content"));
 				bdto.setWriter(rs.getString("writer"));
@@ -70,22 +70,22 @@ public class BoardDAO {
 	}
 	
 	// 글 세부 보기용 쿼리 
-	public BoardDTO selectPost(String id) {
+	public BoardDTO selectPost(int no) {
 		System.out.println("DAO 쿼리- 특정 글 셀렉트 메서드");
 		
 		BoardDTO bdto = new BoardDTO();
-		String sql = "SELECT * FROM board WHERE id =?";
+		String sql = "SELECT * FROM board WHERE no =?";
 		
 		try(
 				Connection conn = dataSource.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				
 				) {
-			pstmt.setString(1, id);
+			pstmt.setInt(1, no);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				bdto.setId(rs.getInt("id"));
+				bdto.setNo(rs.getInt("no"));
 				bdto.setTitle(rs.getString("title"));
 				bdto.setContent(rs.getString("content"));
 				bdto.setWriter(rs.getString("writer"));
@@ -102,7 +102,7 @@ public class BoardDAO {
 	public int updateContent(BoardDTO bdto) {
 		System.out.println("DAO 쿼리- 글 수정 메서드");
 		int result = 0;
-		String sql = "UPDATE board SET title=?, content=? WHERE id=?";
+		String sql = "UPDATE board SET title=?, content=? WHERE no=?";
 		
 		try(
 				Connection conn = dataSource.getConnection();
@@ -111,7 +111,7 @@ public class BoardDAO {
 			
 			pstmt.setString(1, bdto.getTitle());
 			pstmt.setString(2, bdto.getContent());
-			pstmt.setInt(3, bdto.getId()); 
+			pstmt.setInt(3, bdto.getNo()); 
 			result = pstmt.executeUpdate();
 			System.out.println("UPDATE result = " + result);
 		}catch(Exception e) {
@@ -121,15 +121,15 @@ public class BoardDAO {
 	}
 	
 	// 글 삭제하기 쿼리
-	public int deleteContent(String id) {
+	public int deleteContent(int no) {
 		int result = 0;
-		String sql ="DELETE FROM board WHERE id=?";
+		String sql ="DELETE FROM board WHERE no=?";
 		
 		try(	
 				Connection conn = dataSource.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				){
-			pstmt.setString(1, id);
+			pstmt.setInt(1, no);
 			result = pstmt.executeUpdate();
 			
 		}catch(Exception e) {

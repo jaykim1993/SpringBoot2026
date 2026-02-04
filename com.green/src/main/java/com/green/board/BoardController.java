@@ -35,10 +35,35 @@ public class BoardController {
 	}
 	
 	// 3. 전체 글 목록페이지로 이동하는 핸들러
+//	@GetMapping("/board/list")
+//	public String boardList(Model model){
+//		System.out.println("1) B-Controller boardList");
+//		List<BoardDTO> listboard = boardService.allBoardService();
+//		model.addAttribute("list", listboard);
+//		String nextPage = "board/boardList";
+//		return nextPage;
+//	}
+// ------------------- 검색(기능 8.)을 위한 수정 version ↓ ----------------------
 	@GetMapping("/board/list")
-	public String boardList(Model model){
+	public String boardList(
+			Model model,
+			@RequestParam(value="searchType", required=false) String searchType,
+			@RequestParam(value="searchkeyword", required=false) String searchkeyword,
+			RedirectAttributes ra
+			){
 		System.out.println("1) B-Controller boardList");
-		List<BoardDTO> listboard = boardService.allBoardService();
+		List<BoardDTO> listboard;
+		
+		// 1. 검색 버튼 클릭시 => 검색내용으로 list가 갱신되어야 함
+		// 2. 전체 보기 버튼 클릭시 => 전체 보기 나와야 함
+		if(searchType != null && !searchkeyword.trim().isEmpty()) {
+			listboard = boardService.searchService(searchType, searchkeyword);
+		} else {
+			listboard = boardService.allBoardService();
+			ra.addFlashAttribute("msg", "검색결과가 없습니다.");
+			return "redirect:/board/list";
+			
+		}
 		model.addAttribute("list", listboard);
 		String nextPage = "board/boardList";
 		return nextPage;
@@ -87,5 +112,25 @@ public class BoardController {
 	        return "redirect:/board/update?num=" + bdto.getNum();
 	    }
 	}
+	
+	 // 7. 게시글 삭제 처리 핸들러
+	@GetMapping("/board/deletePro")
+	public String boardDelete(
+			@RequestParam("num") int num, 
+			@RequestParam("writerPw") String writerPw,
+			 RedirectAttributes ra
+			) {
+		boolean isSuccess = boardService.deleteService(num, writerPw);
+		
+	    if (isSuccess) {
+	        ra.addFlashAttribute("msg", "게시글이 삭제되었습니다.");
+	        return "redirect:/board/list";
+	    } else {
+	        ra.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
+	        return "redirect:/board/boardInfo?num=" + num;
+	    }
+	}
+	
+	// 8. 검색 타입과 검색 키워드로 자료 출력한는 핸들러 => 3. 전체 목록 출력에 로직 추가한다.
 	
 }

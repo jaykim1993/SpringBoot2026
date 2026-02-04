@@ -12,6 +12,53 @@
 		<div class="section_wrap">
 			<div class="section_header"><h2>전체 글 목록</h2></div>
 			<div class="content">
+				<!-- 게시글 상단 기능 부분 -->
+				<div class = "top-content">
+
+					<!-- 검색 부분 -->
+					<div id="search_wrap">
+					  <form th:action="@{/board/main}" method="get">
+					    <select name="searchType" style="padding: 5px;">
+					    	<!-- opthion value는 선택 시 값이 넘어간다. -->
+					      	<option value="subject">제목</option>
+					      	<option value="content">내용</option>
+					    </select>
+					    <input type="text" 
+					    name="searchKeyword" 
+					    placeholder="검색어를 입력하세요">
+					
+					    <input type="submit" 
+					    value="검색" class="searchBtn">
+					
+					    <input type="button" 
+					    value="전체보기" class="searchBtn"
+					    th:onclick="|location.href='@{/board/main}'|">
+					  </form>
+					</div>
+					
+				<!-- 페이징 버튼 및 표기 div -->
+					<div class="paging">
+					    <a th:if="${ph.prev}"
+					       th:href="@{/board/main(pageNum=${ph.startPage - 1})}">
+					        이전
+					    </a>
+
+					    <span th:each="i : ${#numbers.sequence(ph.startPage, ph.endPage)}">
+					        <a th:href="@{/board/main(pageNum=${i})}"
+					           th:text="${i}"
+					           th:classappend="${i == ph.pageNum ? 'active' : ''}">
+					        </a>
+					    </span>
+
+					    <a th:if="${ph.next}"
+					       th:href="@{/board/main(pageNum=${ph.endPage + 1})}">
+					        다음
+					    </a>
+					</div>
+
+				</div>
+
+				<!-- 게시글 출력 부분 -->
 				<table class="board_list">
 					<thead>
 						<tr>
@@ -22,28 +69,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="li:${list}" class="tr_content">
+						<tr th:each="li, stat:${list}" class="tr_content">
 							<td>
-								<a th:href="@{/board/detail(id=${li.id})}"
-								   th:text="${li.id}"></a>
+								<a th:href="@{/board/detail(no=${li.no}, 
+								num=${ph.totalCnt-((ph.pageNum-1)*ph.pageSize)-stat.index})}"
+								   th:text="${ph.totalCnt-((ph.pageNum-1)*ph.pageSize)-stat.index}"></a>
 							</td>
 							<td>
-								<a th:href="@{/board/detail(id=${li.id})}"
+								<a th:href="@{/board/detail(no=${li.no}, 
+								num=${ph.totalCnt-((ph.pageNum-1)*ph.pageSize)-stat.index})}"
 								   th:text="${li.createdAt}"></a>
 							</td>
 							<td>
-								<a th:href="@{/board/detail(id=${li.id})}"
+								<a th:href="@{/board/detail(no=${li.no}, 
+								num=${ph.totalCnt-((ph.pageNum-1)*ph.pageSize)-stat.index})}"
 								   th:text="${li.title}"></a>
 							</td>
 							<td>
-								<a th:href="@{/board/detail(id=${li.id})}"
+								<a th:href="@{/board/detail(no=${li.no}, 
+								num=${ph.totalCnt-((ph.pageNum-1)*ph.pageSize)-stat.index})}"
 								   th:text="${li.writer}"></a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4" class="btn_area">
-								<a th:href="@{/board/newPost}">새글 등록하기</a>
-								<a th:href="@{/board/main}">새로고침</a>
 							</td>
 						</tr>
 					</tbody>
@@ -52,9 +97,7 @@
 			</div>
 		</div>
 	</section>
-			<script th:if="${msg}">
-			alert('[[${msg}]]')
-		</script>
 	<footer th:replace="~{/header_footer/HeaderFooter.html::footer}"></footer>
+
 </body>
 </html>

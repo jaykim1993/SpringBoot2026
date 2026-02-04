@@ -20,6 +20,8 @@
 		</div>
 	</section>
 	<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
-
+    <script th:if="${msg}">
+        alert('[[${msg}]]');
+    </script>
 </body>
 </html>
