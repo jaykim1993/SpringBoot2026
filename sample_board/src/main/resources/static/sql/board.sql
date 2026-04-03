@@ -1,1 +1,1 @@
-SELECT * FROM springbootdb.board;
+user_memberSELECT * FROM springbootdb.board;

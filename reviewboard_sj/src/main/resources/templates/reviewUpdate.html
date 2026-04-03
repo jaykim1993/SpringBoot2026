@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+	<div class="review-wrap">
+		<form class="new-form" action="/updatePro" method="post">
+			<input type="hidden" name="id" th:value="${oneReview.id}">
+			<h2>리뷰 수정하기</h2>
+		    <label for="title">제목:</label>
+		    <input 
+		    type="text" 
+		    id="title" 
+		    name="title" 
+		    th:value="${oneReview.title}"
+		    required>
+			<br/>
+		    <label for="writer">작성자:</label>
+		    <input 
+		    type="text" 
+		    id="writer" 
+		    name="writer" 
+		    th:value="${oneReview.writer}"
+		    required>
+			<br/>
+		    <label for="rate">별점:</label>
+		    <select id="rate" name="rate" required>
+			    <option value="1" th:selected="${oneReview.rate == 1}">1점 ⭐</option>
+			    <option value="2" th:selected="${oneReview.rate == 2}">2점 ⭐⭐</option>
+			    <option value="3" th:selected="${oneReview.rate == 3}">3점 ⭐⭐⭐</option>
+			    <option value="4" th:selected="${oneReview.rate == 4}">4점 ⭐⭐⭐⭐</option>
+			    <option value="5" th:selected="${oneReview.rate == 5}">5점 ⭐⭐⭐⭐⭐</option>
+		    </select>
+			<br/>
+		    <label class="textlabel" for="content">내용:</label>
+		    <textarea 
+		    id="content" 
+		    name="content" 
+		    rows="5" 
+		    th:text="${oneReview.content}"
+		    required></textarea>
+			<br/>
+			<div class="list-btn-wrap">
+			    <button type="submit" class="list-btn">저장하기</button>
+			    <a th:href="@{/}" class="list-btn">취소</a>
+		    </div>
+		</form>
+	</div>
+	<script th:if="${msg}">
+          alert('[[${msg}]]');
+    </script>
+</body>
+</html>

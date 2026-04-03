@@ -1,3 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviewboard.mapper.ReviewBoardMapper">
+
+	<insert id ="insertReview"
+	parameterType = "RDTO">
+		INSERT INTO review_board(title, content, writer, rate)
+		VALUES(#{title}, #{content}, #{writer}, #{rate})
+	</insert>
+	
+	<select id = "getAllCount" resultType = "int">
+		SELECT COUNT(*) FROM review_board
+	</select>
+	
+	<select id = "getAllReview" resultType = "RDTO">
+		SELECT * FROM review_board ORDER BY id DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	<select id = "getOneReview"
+	parameterType ="int"
+	resultType="RDTO">
+		SELECT * FROM review_board WHERE id = #{id}
+	</select>
+	
+	<update id = "updateReadcount"
+	parameterType = "int">
+		UPDATE review_board SET readcount = readcount+1 WHERE id = #{id}
+	</update>
+
+	<update id = "updateReview"
+	parameterType ="RDTO">
+		UPDATE review_board SET title=#{title}, content=#{content}, rate=#{rate} 
+		WHERE id=#{id}
+	</update>
+	
+	<delete id ="deleteReview">
+		DELETE FROM review_board WHERE id=#{id}
+	</delete>
+	
+	<select id ="getRateAvg"
+	resultType="double">
+		SELECT ROUND(AVG(rate), 1) FROM review_board
+	</select>
+</mapper>

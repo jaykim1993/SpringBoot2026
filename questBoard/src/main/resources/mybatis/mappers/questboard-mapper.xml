@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="questBoard.mapper.QuestBoardMapper">
+	<select id ="getAllBoard" resultType="q">
+		SELECT * FROM questBoard
+		ORDER BY ref DESC, re_step ASC
+	</select>
+	
+	<insert id="insertBoard" parameterType="q">
+		INSERT INTO questBoard(writer, subject, ref, re_step, content, img)
+		VALUES(#{writer}, #{subject}, (SELECT IFNULL(MAX(q.ref)+1, 1) FROM questBoard q), 0, #{content}, #{img})
+	</insert>
+	
+	<select id="getOneBoard" parameterType="int" resultType="q">
+		SELECT * FROM questBoard
+		WHERE num = #{num}
+	</select>
+	<select id="isReExist" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM questBoard 
+		WHERE ref = (SELECT ref FROM questBoard WHERE num = #{num})
+	</select>
+	<insert id="reInsert" parameterType="q">
+		INSERT INTO questBoard(writer, subject, ref, re_step, content)
+		VALUES(#{writer}, #{subject}, #{ref}, #{re_step}+1, #{content})
+	</insert>
+</mapper>

@@ -39,6 +39,7 @@ public class BoardController {
 		MemberDTO loginedMember = (MemberDTO)session.getAttribute("loginedMember");
 		// 로그인 정보가 MemberDTO 타입으로 loginedMember에 들어간다.
 		if(loginedMember != null) {
+			
 			bdto.setId(loginedMember.getId());
 			System.out.println("db에 저장될 아이디 확인 : "+ loginedMember.getId());
 		}else {

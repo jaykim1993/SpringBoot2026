@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="replyBoard.mapper.ReplyBoardMapper">
+
+	<!-- ref 최초글은 1(null이었기에), 이후 전체 ref 중 최대값에 1씩 증가 -->
+	<!-- re_step, re_level은 게시글(부모글)의 경우 1 값만 갖는다. -->
+	<insert id="insertReplyBoard" parameterType="rDTO">
+		INSERT INTO replyBoard(writer, email, subject, password, ref, re_step, re_level, content, upload1, upload2)
+		VALUES(#{writer}, #{email}, #{subject}, #{password},
+		(SELECT IFNULL(MAX(r.ref) + 1, 1) FROM replyBoard r), 1, 1, #{content}, #{upload1}, #{upload2})
+	</insert>
+	
+	<!-- 부모글 -> 답글 -> 답글 순서로 정렬한다. -->
+	<select id="getAllReplyBoard" resultType="rDTO">
+		SELECT * FROM replyBoard
+		ORDER BY ref DESC, re_step ASC
+	</select>
+	
+	<select id="getOneBoard" parameterType="int" resultType="rDTO">
+		SELECT * FROM replyBoard
+		WHERE num = #{num}
+	</select>
+	<!-- 원글 답글의 경우 re_level 필요없고 re_step = 2면됨 -->
+<!-- public void reWriteInsert(ReplyBoardDTO rdto); -->
+	<insert id ="reWriteInsert" parameterType="rDTO">
+		INSERT INTO replyBoard(writer, email, subject, password, ref, re_step, re_level, content)
+		VALUES(
+		#{writer}, #{email}, #{subject}, #{password}, 
+		#{ref}, #{re_step}+1, #{re_level}+1, #{content}
+		)
+	</insert>
+<!--  public void reSqUpdate(ReplyBoardDTO rdto); -->
+	<update id="reSqUpdate" parameterType="rDTO">
+		UPDATE replyBoard
+		SET re_step = re_step + 1
+		WHERE #{ref} AND re_step > #{re_step}
+	</update>
+</mapper>

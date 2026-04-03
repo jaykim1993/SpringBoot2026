@@ -1,0 +1,190 @@
+@charset "UTF-8";
+
+body {
+    font-family: "Noto Sans KR", sans-serif;
+    background: #f5f5f5;
+}
+* {
+	margin: 0; padding: 0;
+}
+
+a {
+	color: #404040;
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+input, textarea{
+	width: 300px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	outline: none;
+	margin: 3px;
+	border-radius : 5px;
+	background-color: inherit;
+}
+ select  {
+ 	width: 180px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	outline: none;
+	margin: 3px;
+	border-radius : 5px;
+	background-color: inherit;
+ }
+.review-wrap {
+    width: 900px;
+    margin: 50px auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 30px;
+}
+
+.review-wrap h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.list-summary {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.stars {
+    color: #f5b301;
+    margin-left: 5px;
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.list-table th,
+.list-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.list-table th {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+.list-table td.title {
+    text-align: left;
+    padding-left: 15px;
+}
+
+.list-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.list-btn-wrap, .detail-btn{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.list-btn {
+    background: #2d7df6;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.list-btn:hover {
+    background: #1e63c9;
+}
+
+.new-form{
+	max-width: 500px;
+    margin: auto;
+
+    gap: 15px;
+}
+
+label {
+	display: inline-block;
+	width: 120px;
+}
+.textlabel{
+	transform: translateY(-80px);
+}
+
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+.detail-table tr {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.detail-table th {
+    width: 140px;
+    background-color: #f5f6f8;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    vertical-align: top;
+}
+
+.detail-table td {
+    padding: 14px 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* 페이징 버튼 */
+.paging {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.paging ul {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+    gap: 6px;
+}
+
+.paging li {
+    display: inline-block;
+}
+
+.paging li a {
+    display: block;
+    padding: 8px 12px;
+    background-color: #f0f2f5;
+    color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.paging li a:hover {
+    background-color: #dce0eb;
+}
+
+.paging li.active a {
+    background-color: #4a6cf7;
+    color: #fff;
+    font-weight: 600;
+}
+

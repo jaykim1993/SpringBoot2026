@@ -6,7 +6,7 @@ writerPw varchar(20),
 reg_date datetime default now(),
 readcount int default 0,
 content varchar(1000),
-id varchar(20)
+id varchar(20)board02board
 );
 
 drop table board02;

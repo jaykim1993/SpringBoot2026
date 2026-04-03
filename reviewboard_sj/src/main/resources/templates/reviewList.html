@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>레스토랑 리뷰</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+	<div class="review-wrap">
+	    <h2>레스토랑 리뷰</h2>
+	
+	    <div class="list-summary">
+	        전체 평균 별점 : <strong th:text="${rateAvg}+'점'"></strong>
+	        
+	        <span class="stars" th:text="${stars}"></span>
+	    </div>
+	
+	    <table class="list-table">
+	        <thead>
+	            <tr>
+	                <th>번호</th>
+	                <th>제목</th>
+	                <th>작성자</th>
+	                <th>별점</th>
+	                <th>작성일</th>
+	                <th>조회수</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="li,stat : ${list}">
+	                <td th:text="${ph.totalCnt - ((ph.pageNum-1) * ph.pageSize) - stat.index}"></td>
+	                <td class="title">
+					    <a 
+						    th:href="@{/detail(id=${li.id})}" 
+						    th:text="${li.title}" >
+					    </a>
+	                </td>
+	                <td th:text="${li.writer}"></td>
+	                <td th:text="${li.rate}"></td>
+	                <td th:text="${li.createdAt}"></td>
+	                <td th:text="${li.readCount}"></td>
+	            </tr>
+	        </tbody>
+	    </table>
+	<div class="paging">
+	    <ul>
+	        <!-- 이전 버튼 -->
+	        <li th:if="${ph.startPage > 1}">
+	            <a th:href="@{/(page=${ph.startPage - 1}, pageSize=${ph.pageSize})}">이전</a>
+	        </li>
+	
+	        <!-- 페이지 번호 반복 -->
+	        <li th:each="i : ${#numbers.sequence(ph.startPage, ph.endPage)}"
+	            th:classappend="${ph.pageNum == i} ? 'active'">
+	            <a th:href="@{/(page=${i}, pageSize=${ph.pageSize})}" th:text="${i}"></a>
+	        </li>
+	
+	        <!-- 다음 버튼 -->
+	        <li th:if="${ph.endPage < ph.totalPage}">
+	            <a th:href="@{/(page=${ph.endPage + 1}, pageSize=${ph.pageSize})}">다음</a>
+	        </li>
+	    </ul>
+	</div>
+	    <div class="list-btn-wrap">
+	        <a th:href="@{/write}" class="list-btn">리뷰 작성하기</a>
+	    </div>
+	</div>
+		<script th:if="${msg}">
+          alert('[[${msg}]]');
+    </script>
+</body>
+</html>

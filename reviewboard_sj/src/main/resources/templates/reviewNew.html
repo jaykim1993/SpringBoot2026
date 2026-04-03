@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>리뷰 작성</title>
+<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+	<div class="review-wrap">
+		<form class="new-form" action="/writePro" method="post">
+			<h2>리뷰 작성</h2>
+		    <label for="title">제목:</label>
+		    <input 
+		    type="text" 
+		    id="title" 
+		    name="title" 
+		    placeholder="리뷰 제목" 
+		    required>
+			<br/>
+		    <label for="writer">작성자:</label>
+		    <input 
+		    type="text" 
+		    id="writer" 
+		    name="writer" 
+		    placeholder="작성자 이름" 
+		    required>
+			<br/>
+		    <label for="rate">별점:</label>
+		    <select id="rate" name="rate" required>
+		        <option value="">선택</option>
+			    <option value="1">1점 ⭐</option>
+			    <option value="2">2점 ⭐⭐</option>
+			    <option value="3">3점 ⭐⭐⭐</option>
+			    <option value="4">4점 ⭐⭐⭐⭐</option>
+			    <option value="5">5점 ⭐⭐⭐⭐⭐</option>
+		    </select>
+			<br/>
+		    <label class="textlabel" for="content">내용:</label>
+		    <textarea 
+		    id="content" 
+		    name="content" 
+		    rows="5" 
+		    placeholder="리뷰 내용을 입력하세요" 
+		    required></textarea>
+			<br/>
+			<div class="list-btn-wrap">
+			    <button type="submit" class="list-btn">저장하기</button>
+			    <a th:href="@{/}" class="list-btn">취소</a>
+		    </div>
+		</form>
+	</div>
+	<script th:if="${msg}">
+          alert('[[${msg}]]');
+    </script>
+</body>
+</html>
